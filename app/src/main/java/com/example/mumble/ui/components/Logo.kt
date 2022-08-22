@@ -18,7 +18,6 @@ fun Logo() {
             painter = painterResource(id = R.drawable.ic_launcher_foreground),
             contentDescription = "Logo"
         )
-        Text(text = "Let's have some fun", style = MaterialTheme.typography.body1)
     }
 }
 
