@@ -16,11 +16,16 @@ class OnboardingViewModel : ViewModel() {
 
     private fun startLogoAnimation() {
         viewModelScope.launch {
-            delay(500)
+            delay(SHORT_DELAY)
             isLogoVisible.value = true
-            delay(3000)
+            delay(LONG_DELAY)
             isLogoVisible.value = false
         }
     }
 
+    companion object {
+        const val ANIMATION_TIME = 2000
+        const val SHORT_DELAY = 500L
+        const val LONG_DELAY = 3000L
+    }
 }

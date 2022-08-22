@@ -2,8 +2,6 @@ package com.example.mumble.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
@@ -23,8 +21,14 @@ fun Logo() {
 
 @Preview
 @Composable
-private fun previewLogo(){
+private fun PreviewLogo() {
     MumbleTheme {
         Logo()
     }
+}
+
+@Preview
+@Composable
+private fun PreviewShit() {
+    // todo
 }

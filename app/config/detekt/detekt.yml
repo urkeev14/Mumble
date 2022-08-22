@@ -1,0 +1,12 @@
+naming:
+  FunctionNaming:
+    active: true
+    excludes: [ "**/ui/**", "**/androidTest**", "**/test/**", "**Preview**" ]
+
+style:
+  MagicNumber:
+    active: true
+    excludes: [ "**/Color.kt" ]
+  UnusedPrivateMember:
+    active: false
+    excludes: [ "**/ui/**" ]

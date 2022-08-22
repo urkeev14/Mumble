@@ -21,8 +21,8 @@ import com.example.mumble.ui.components.Logo
 fun OnboardingScreen(viewModel: OnboardingViewModel = viewModel()) {
     AnimatedVisibility(
         visible = viewModel.isLogoVisible.value,
-        enter = fadeIn(animationSpec = tween(2000)),
-        exit = fadeOut(animationSpec = tween(2000))
+        enter = fadeIn(animationSpec = tween(OnboardingViewModel.ANIMATION_TIME)),
+        exit = fadeOut(animationSpec = tween(OnboardingViewModel.ANIMATION_TIME))
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -30,7 +30,10 @@ fun OnboardingScreen(viewModel: OnboardingViewModel = viewModel()) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Logo()
-            Text(text = stringResource(id = R.string.lets_have_fun), style = MaterialTheme.typography.body1)
+            Text(
+                text = stringResource(id = R.string.lets_have_fun),
+                style = MaterialTheme.typography.body1
+            )
         }
     }
 }

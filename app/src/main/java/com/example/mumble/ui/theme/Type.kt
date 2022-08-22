@@ -9,7 +9,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.mumble.R
 
-
 val MumbleFont = FontFamily(
     Font(R.font.serif_regular, FontWeight.Normal),
     Font(R.font.serif_bold, FontWeight.Bold),
