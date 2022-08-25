@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Mumble</string>
     <string name="lets_have_fun">Let\'s have some fun</string>
+    <string name="onboarding">Onboarding</string>
+    <string name="go">Go</string>
+    <string name="chats">Chats</string>
+    <string name="chat">Chat</string>
+    <string name="go_back">Go back</string>
+    <string name="introduction">Introduction</string>
 </resources>
