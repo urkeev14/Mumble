@@ -7,4 +7,12 @@
     <string name="chat">Chat</string>
     <string name="go_back">Go back</string>
     <string name="introduction">Introduction</string>
+    <string name="introduce_yourself">Introduce yourself</string>
+    <string name="introduction_disclaimer">Enter your nickname to be identified on the network</string>
+    <string name="nickname">Nickname</string>
+    <string name="nickname_empty">Nickname should not be empty</string>
+    <string name="nickname_invalid">Username requires:\n- 8 to 20 characters\n- Only small caps\n- No underscore on both start and end of username.</string>
+    <string name="ip_address_unavailable">IP address not found</string>
+    <string name="chat_registered">You can chat now !</string>
+    <string name="chat_registration_failed">Failed to tell others that you are online :(</string>
 </resources>
