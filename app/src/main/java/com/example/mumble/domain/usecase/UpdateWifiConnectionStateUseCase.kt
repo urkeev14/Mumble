@@ -1,6 +1,6 @@
 package com.example.mumble.domain.usecase
 
-import com.example.mumble.data.repository.IConnectivityRepository
+import com.example.mumble.domain.repository.IConnectivityRepository
 import javax.inject.Inject
 
 /**

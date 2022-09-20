@@ -1,6 +1,6 @@
 package com.example.mumble.domain.usecase
 
-import com.example.mumble.data.repository.IConnectivityRepository
+import com.example.mumble.domain.repository.IConnectivityRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -8,7 +8,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class UpdateWifiConnectionStateUseCaseTest {
+internal class UpdateWifiConnectionStateUseCaseTest {
 
     private lateinit var repository: IConnectivityRepository
     private lateinit var sut: UpdateWifiConnectionStateUseCase

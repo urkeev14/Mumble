@@ -1,7 +1,7 @@
 package com.example.mumble.data.repository.impl
 
-import com.example.mumble.data.repository.IConnectivityRepository
-import com.example.mumble.data.repository.source.local.IConnectivityLocalDataSource
+import com.example.mumble.domain.repository.IConnectivityRepository
+import com.example.mumble.domain.repository.source.IConnectivityLocalDataSource
 import kotlinx.coroutines.flow.Flow
 
 class ConnectivityRepository(

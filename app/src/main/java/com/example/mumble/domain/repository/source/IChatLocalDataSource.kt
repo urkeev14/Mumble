@@ -1,23 +1,18 @@
-package com.example.mumble.data.repository
+package com.example.mumble.domain.repository.source
 
 import com.example.mumble.domain.model.User
-import com.example.mumble.services.ChatDiscoveryService
+import com.example.mumble.services.ChatService
+import com.example.mumble.utils.OtherUsersOnline
 import kotlinx.coroutines.flow.Flow
 
-interface IChatRepository {
+interface IChatLocalDataSource {
+
     /**
      * Gets current users nickname flow
      *
      * @return users nickname
      */
     fun getCurrentUser(): Flow<User>
-
-    /**
-     * Updates attributes of current user
-     *
-     * @param user current user
-     */
-    suspend fun updateCurrentUser(user: User)
 
     /**
      * Sets current users nickname that he/she will be using while chatting
@@ -34,16 +29,30 @@ interface IChatRepository {
     suspend fun setCurrentUserOnline(isOnline: Boolean)
 
     /**
-     * Saves discovered user found via [ChatDiscoveryService]
+     * Saves discovered user found via [ChatService]
      *
      * @param user
      */
-    suspend fun createUser(user: User)
+    suspend fun createNewUser(user: User)
 
     /**
-     * Delete existing user by nickname
+     * Returns all online users
      *
-     * @param nickname nickname of a specific user
+     * @return flow of online users
+     */
+    fun getAllUsers(): Flow<OtherUsersOnline>
+
+    /**
+     * Updates attributes of current user
+     *
+     * @param user current user
+     */
+    suspend fun updateCurrentUser(user: User)
+
+    /**
+     * Delete specific user by nickname
+     *
+     * @param nickname
      */
     fun deleteUser(nickname: String)
 }

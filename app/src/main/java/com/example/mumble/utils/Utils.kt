@@ -1,11 +1,13 @@
 package com.example.mumble.utils
 
+import android.util.Log
 import java.net.Inet4Address
-import java.net.InetAddress
 import java.net.NetworkInterface
 import java.net.ServerSocket
 import java.net.SocketException
 import java.util.Enumeration
+
+private val TAG = "Utils"
 
 /**
  * Get Local IPv4 address
@@ -13,12 +15,13 @@ import java.util.Enumeration
  */
 suspend fun getIPv4Address(): String? {
     try {
-        val en: Enumeration<NetworkInterface> = NetworkInterface.getNetworkInterfaces()
-        while (en.hasMoreElements()) {
-            val `interface`: NetworkInterface = en.nextElement()
-            val enumIpAddr: Enumeration<InetAddress> = `interface`.inetAddresses
-            while (enumIpAddr.hasMoreElements()) {
-                val inetAddress: InetAddress = enumIpAddr.nextElement()
+        val networkInterfaces: Enumeration<NetworkInterface> =
+            NetworkInterface.getNetworkInterfaces()
+        while (networkInterfaces.hasMoreElements()) {
+            val networkInterface = networkInterfaces.nextElement()
+            val inetAddresses = networkInterface.inetAddresses
+            while (inetAddresses.hasMoreElements()) {
+                val inetAddress = inetAddresses.nextElement()
                 if (
                     !inetAddress.isLoopbackAddress &&
                     inetAddress is Inet4Address &&
@@ -29,7 +32,7 @@ suspend fun getIPv4Address(): String? {
             }
         }
     } catch (ex: SocketException) {
-        ex.printStackTrace()
+        Log.e(TAG, "getIPv4Address: ", ex)
     }
     return null
 }

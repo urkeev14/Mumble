@@ -17,14 +17,27 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mumble.R
+import com.example.mumble.domain.model.ToolbarConfiguration
+import com.example.mumble.domain.model.UiConfiguration
 import com.example.mumble.ui.components.Logo
 import com.example.mumble.utils.extensions.observeFlowSafely
+import com.example.mumble.utils.extensions.usingContext
 
 @Composable
 fun OnboardingScreen(
     viewModel: OnboardingViewModel = hiltViewModel(),
     onUserOnboarded: () -> Unit
 ) {
+    usingContext {
+        viewModel.updateUiConfiguration(
+            UiConfiguration(
+                ToolbarConfiguration(
+                    title = it.resources.getString(R.string.onboarding),
+                    isVisible = false
+                )
+            )
+        )
+    }
     viewModel.isUserOnboarded.observeFlowSafely { isUserOnboarded ->
         if (isUserOnboarded) {
             onUserOnboarded()

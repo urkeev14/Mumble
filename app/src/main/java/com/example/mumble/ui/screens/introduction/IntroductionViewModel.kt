@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mumble.domain.usecase.UpdateCurrentUsersNicknameUseCase
+import com.example.mumble.ui.IUiManager
 import com.example.mumble.utils.State
 import com.example.mumble.utils.UiMessage
 import com.example.mumble.utils.validator.FieldValidator
@@ -16,9 +17,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class IntroductionViewModel @Inject constructor(
+    private val uiManager: IUiManager,
     private val fieldValidator: FieldValidator,
     private val updateCurrentUsersNicknameUseCase: UpdateCurrentUsersNicknameUseCase,
-) : ViewModel() {
+) : ViewModel(), IUiManager by uiManager {
 
     val nickname = mutableStateOf(NO_NICKNAME)
 

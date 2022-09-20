@@ -1,6 +1,6 @@
 package com.example.mumble.domain.usecase
 
-import com.example.mumble.data.repository.IChatRepository
+import com.example.mumble.domain.repository.IChatRepository
 import com.example.mumble.ui.screens.introduction.IntroductionScreen
 import javax.inject.Inject
 

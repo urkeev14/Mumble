@@ -6,24 +6,11 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
-import com.example.mumble.services.ChatAnnouncementService
-import com.example.mumble.ui.components.Logo
+import com.example.mumble.services.ChatService
 import com.example.mumble.ui.theme.MumbleTheme
-import com.example.mumble.utils.extensions.observeIn
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,18 +40,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MumbleTheme {
-                MumbleNavHost()
+                App()
             }
         }
         startChatAnnouncementService()
         observeConnectivity()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        observeIn(lifecycleScope, viewModel.uiMessage) {
-            Log.d("MainActivity", it.toString())
-        }
     }
 
     private fun observeConnectivity() {
@@ -82,8 +62,9 @@ class MainActivity : ComponentActivity() {
         viewModel.setWifiConnectionAvailable(isAvailable)
     }
 
+    // TODO: Handle start and stop of service in [IntroductionScreen.kt] and [ChatsScreen.kt]
     private fun startChatAnnouncementService() {
-        val intent = Intent(this, ChatAnnouncementService::class.java)
+        val intent = Intent(this, ChatService::class.java)
         startService(intent)
     }
 
@@ -93,24 +74,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun stopChatAnnouncementService() {
-        val intent = Intent(this, ChatAnnouncementService::class.java)
+        val intent = Intent(this, ChatService::class.java)
         stopService(intent)
     }
 }
-
-/*
-@Preview
-@Composable
-private fun PreviewMainActivity() {
-    MumbleTheme {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Logo()
-            Text(text = "Let's have some fun", style = MaterialTheme.typography.body1)
-        }
-    }
-}
-*/

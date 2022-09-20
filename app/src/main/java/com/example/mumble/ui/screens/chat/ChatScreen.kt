@@ -1,26 +1,33 @@
 package com.example.mumble.ui.screens.chat
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.stringResource
-import com.example.mumble.R
+import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.mumble.domain.model.ToolbarConfiguration
+import com.example.mumble.domain.model.UiConfiguration
+import com.example.mumble.domain.model.User
+import com.example.mumble.utils.extensions.usingContext
 
 @Composable
 fun ChatScreen(
-    onGoBackButtonClick: () -> Unit
+    username: String,
+    viewModel: ChatViewModel = hiltViewModel()
 ) {
-    Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(text = stringResource(id = R.string.chat), style = MaterialTheme.typography.h3)
-        Button(onClick = onGoBackButtonClick) {
-            Text(text = stringResource(id = R.string.go_back))
-        }
+    viewModel.loadUser(username)
+    val user = viewModel.user.collectAsState()
+    user.value?.let {
+        val configuration = getUiConfiguration(username, it)
+        usingContext { viewModel.updateUiConfiguration(configuration) }
     }
+}
+
+@Composable
+private fun getUiConfiguration(username: String, it: User): UiConfiguration {
+    return UiConfiguration(
+        ToolbarConfiguration(
+            title = username,
+            isBackButtonVisible = true,
+            color = it.avatar.color
+        )
+    )
 }

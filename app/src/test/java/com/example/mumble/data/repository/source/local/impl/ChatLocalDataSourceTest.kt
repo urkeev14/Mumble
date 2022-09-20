@@ -1,5 +1,6 @@
 package com.example.mumble.data.repository.source.local.impl
 
+import com.example.mumble.data.repository.source.local.ChatLocalDataSource
 import com.example.mumble.domain.model.User
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -21,7 +22,7 @@ internal class ChatLocalDataSourceTest {
 
     @Test
     fun `getCurrentUser returns updated user when user is updated`() = runBlocking {
-        val expected = User("urkeev1414", ONLINE, "192.168.0.1", 1234)
+        val expected = User(RANDOM_USERNAME_1, ONLINE, RANDOM_IP_1, 1234)
         sut.updateCurrentUser(expected)
 
         val actual = sut.getCurrentUser().first()
@@ -30,8 +31,8 @@ internal class ChatLocalDataSourceTest {
 
     @Test
     fun `createNewUser saves new users`() = runBlocking {
-        val user1 = User("urkeev1414", ONLINE, "192.168.0.1", 1234)
-        val user2 = User("urkeev2323", ONLINE, "192.168.0.1", 1234)
+        val user1 = User(RANDOM_USERNAME_1, ONLINE, RANDOM_IP_1, RANDOM_PORT_1)
+        val user2 = User(RANDOM_USERNAME_2, ONLINE, RANDOM_IP_2, RANDOM_PORT_1)
 
         sut.createNewUser(user1)
         val actual1 = sut.getAllUsers().first()
@@ -45,13 +46,17 @@ internal class ChatLocalDataSourceTest {
 
     @Test
     fun `createNewUser saves only users with distinct usernames`() = runBlocking {
-        val user1 = User("urkeev1414", ONLINE, "192.168.0.1", 1234)
-        val user2 = User("urkeev1414", ONLINE, "192.168.0.3", 2345)
+        // Given two users with same username
+        val user1 = User(RANDOM_USERNAME_1, ONLINE, RANDOM_IP_1, RANDOM_PORT_1)
+        val user2 = User(RANDOM_USERNAME_1, ONLINE, RANDOM_IP_2, RANDOM_PORT_2)
 
+        // When both users are created
         sut.createNewUser(user1)
         sut.createNewUser(user2)
         val actual = sut.getAllUsers().first()
 
+        // Then only the second user will exist
+        // because there should be no 2 users with same username
         assertTrue(actual.contains(user2))
         assertFalse(actual.contains(user1))
     }
@@ -59,11 +64,11 @@ internal class ChatLocalDataSourceTest {
     @Test
     fun `updateCurrentUser updates current user`() = runBlocking {
         // Given the initial user data
-        val user = User("urkeev1414", ONLINE, "192.168.0.1", 1234)
+        val user = User(RANDOM_USERNAME_1, ONLINE, RANDOM_IP_1, RANDOM_PORT_1)
         sut.updateCurrentUser(user)
 
         // When updateCurrentUser method is called
-        val updatedUser = user.copy("other_username")
+        val updatedUser = user.copy(RANDOM_USERNAME_2)
         sut.updateCurrentUser(updatedUser)
 
         // Then user gets updated successfully
@@ -74,8 +79,8 @@ internal class ChatLocalDataSourceTest {
     @Test
     fun `deleteUser deletes user`() = runBlocking {
         // Given that 2 new users were created
-        val user1 = User("urkeev1414", ONLINE, "192.168.0.1", 1234)
-        val user2 = User("urkeev1414", ONLINE, "192.168.0.3", 2345)
+        val user1 = User(RANDOM_USERNAME_1, ONLINE, RANDOM_IP_1, RANDOM_PORT_1)
+        val user2 = User(RANDOM_USERNAME_1, ONLINE, RANDOM_IP_2, RANDOM_PORT_2)
         sut.createNewUser(user1)
         sut.createNewUser(user2)
 
@@ -90,11 +95,11 @@ internal class ChatLocalDataSourceTest {
     @Test
     fun `setCurrentUsersNickname sets current users nickname successfully`() = runBlocking {
         // Given the initial user data
-        val user1 = User("urkeev1414", ONLINE, "192.168.0.1", 1234)
+        val user1 = User(RANDOM_USERNAME_1)
         sut.updateCurrentUser(user1)
 
         // When updating current users nickname
-        val userWithUpdatedNickname = user1.copy("new_nickname")
+        val userWithUpdatedNickname = user1.copy(RANDOM_USERNAME_2)
         sut.setCurrentUsersNickname(userWithUpdatedNickname.username)
 
         // Then users nickname gets updated
@@ -104,55 +109,41 @@ internal class ChatLocalDataSourceTest {
 
     @Test
     fun `setCurrentUserOnline sets user online status to true successfully`() = runBlocking {
-        val user1 = User(
-            username = "urkeev1414",
-            host = "192.168.0.1",
-            isOnline = OFFLINE,
-            port = 1234
-        )
-        sut.updateCurrentUser(user1)
+        // Whenever use case is invoked to set users online status to false
+        sut.setCurrentUserOnline(ONLINE)
 
-        var expectedIsOnline = false
-        var actualIsOnline = sut.getCurrentUser().first().isOnline
+        val expected = ONLINE
+        val actual = sut.getCurrentUser().first().isOnline
 
-        assertEquals(expectedIsOnline, actualIsOnline)
-
-        sut.setCurrentUserOnline(true)
-
-        expectedIsOnline = true
-        actualIsOnline = sut.getCurrentUser().first().isOnline
-
-        assertEquals(expectedIsOnline, actualIsOnline)
+        // The online status is set to false
+        assertEquals(expected, actual)
     }
 
     @Test
     fun `setCurrentUserOnline sets user online status to false successfully`() = runBlocking {
-        // Given that user is online
-        val user1 = User(
-            username = "urkeev1414",
-            isOnline = ONLINE,
-            host = "192.168.0.1",
-            port = 1234
-        )
+        // Given the initial user data
+        val user1 = User(RANDOM_USERNAME_1)
         sut.updateCurrentUser(user1)
-
-        var expectedIsOnline = ONLINE
-        var actualIsOnline = sut.getCurrentUser().first().isOnline
-
-        assertEquals(expectedIsOnline, actualIsOnline)
 
         // Whenever use case is invoked to set users online status to false
         sut.setCurrentUserOnline(OFFLINE)
 
-        expectedIsOnline = OFFLINE
-        actualIsOnline = sut.getCurrentUser().first().isOnline
+        val expected = OFFLINE
+        val user = sut.getCurrentUser().first()
+        val actual = user.isOnline
 
         // The online status is set to false
-        assertEquals(expectedIsOnline, actualIsOnline)
+        assertEquals(expected, actual)
     }
 
     companion object {
         const val ONLINE = true
         const val OFFLINE = false
+        const val RANDOM_USERNAME_1 = "urkeev14"
+        const val RANDOM_USERNAME_2 = "urkeev2323"
+        const val RANDOM_IP_1 = "192.168.0.1"
+        const val RANDOM_IP_2 = "192.168.0.3"
+        const val RANDOM_PORT_1 = 1234
+        const val RANDOM_PORT_2 = 2345
     }
 }

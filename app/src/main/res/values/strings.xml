@@ -11,8 +11,11 @@
     <string name="introduction_disclaimer">Enter your nickname to be identified on the network</string>
     <string name="nickname">Nickname</string>
     <string name="nickname_empty">Nickname should not be empty</string>
-    <string name="nickname_invalid">Username requires:\n- 8 to 20 characters\n- Only small caps\n- No underscore on both start and end of username.</string>
+    <string name="nickname_invalid">Username requires:\n- 4 to 15 characters\n- Only small caps\n- No underscore on both start and end of username.</string>
     <string name="ip_address_unavailable">IP address not found</string>
     <string name="chat_registered">You can chat now !</string>
     <string name="chat_registration_failed">Failed to tell others that you are online :(</string>
+    <string name="search">Search</string>
+    <string name="nobody_online">Nobody online</string>
+    <string name="nobody_online_description">Fuck. There\'s nobody you can talk to...\nGo grab a beer and come back in a few minutes.</string>
 </resources>

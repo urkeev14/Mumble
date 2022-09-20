@@ -1,8 +1,9 @@
 package com.example.mumble.data.repository.impl
 
-import com.example.mumble.data.repository.IChatRepository
-import com.example.mumble.data.repository.source.local.IChatLocalDataSource
 import com.example.mumble.domain.model.User
+import com.example.mumble.domain.repository.IChatRepository
+import com.example.mumble.domain.repository.source.IChatLocalDataSource
+import com.example.mumble.utils.OtherUsersOnline
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -28,6 +29,10 @@ class ChatRepository @Inject constructor(
 
     override suspend fun createUser(user: User) {
         localDataSource.createNewUser(user)
+    }
+
+    override fun getAllUsers(): Flow<OtherUsersOnline> {
+        return localDataSource.getAllUsers()
     }
 
     override fun deleteUser(nickname: String) {

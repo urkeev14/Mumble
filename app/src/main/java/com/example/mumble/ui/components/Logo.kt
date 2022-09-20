@@ -24,10 +24,10 @@ fun Logo() {
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun PreviewLogo() {
-    MumbleTheme(darkTheme = true) {
+    MumbleTheme {
         Logo()
     }
 }

@@ -1,7 +1,9 @@
 package com.example.mumble.utils.extensions
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
@@ -21,4 +23,12 @@ inline fun <reified T> Flow<T>.observeFlowSafely(
             flowWithLifecycle(lifecycleOwner.lifecycle, minActiveState).collect(action)
         }
     }
+}
+
+@Composable
+fun usingContext(action: suspend (Context) -> Unit) {
+    val context = LocalContext.current
+    LaunchedEffect(key1 = null, block = {
+        action(context)
+    })
 }

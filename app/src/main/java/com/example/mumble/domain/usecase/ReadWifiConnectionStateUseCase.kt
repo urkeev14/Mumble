@@ -1,6 +1,6 @@
 package com.example.mumble.domain.usecase
 
-import com.example.mumble.data.repository.IConnectivityRepository
+import com.example.mumble.domain.repository.IConnectivityRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

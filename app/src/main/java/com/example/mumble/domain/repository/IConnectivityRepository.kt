@@ -1,4 +1,4 @@
-package com.example.mumble.data.repository
+package com.example.mumble.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 

@@ -1,6 +1,7 @@
 package com.example.mumble.ui.screens.introduction
 
 import com.example.mumble.domain.usecase.UpdateCurrentUsersNicknameUseCase
+import com.example.mumble.ui.IUiManager
 import com.example.mumble.utils.State
 import com.example.mumble.utils.UiMessage
 import com.example.mumble.utils.validator.impl.NicknameFieldValidator
@@ -25,6 +26,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class IntroductionViewModelTest {
 
+    private lateinit var uiManager: IUiManager
     private lateinit var validator: NicknameFieldValidator
     private lateinit var updateCurrentUsersNicknameUseCase: UpdateCurrentUsersNicknameUseCase
     private lateinit var sut: IntroductionViewModel
@@ -32,9 +34,10 @@ class IntroductionViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(StandardTestDispatcher())
+        uiManager = mockk()
         validator = spyk()
         updateCurrentUsersNicknameUseCase = mockk()
-        sut = IntroductionViewModel(validator, updateCurrentUsersNicknameUseCase)
+        sut = IntroductionViewModel(uiManager, validator, updateCurrentUsersNicknameUseCase)
     }
 
     @After

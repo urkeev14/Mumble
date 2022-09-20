@@ -1,6 +1,6 @@
 package com.example.mumble.domain.usecase
 
-import com.example.mumble.data.repository.IChatRepository
+import com.example.mumble.domain.repository.IChatRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

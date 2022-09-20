@@ -1,6 +1,6 @@
 package com.example.mumble.domain.usecase
 
-import com.example.mumble.data.repository.IChatRepository
+import com.example.mumble.domain.repository.IChatRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -8,7 +8,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-class UpdateCurrentUsersNicknameUseCaseTest {
+internal class UpdateCurrentUsersNicknameUseCaseTest {
 
     private lateinit var repository: IChatRepository
     private lateinit var sut: UpdateCurrentUsersNicknameUseCase
