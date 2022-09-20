@@ -15,6 +15,6 @@ class UpdateCurrentUsersNicknameUseCase @Inject constructor(
     private val repository: IChatRepository
 ) {
     suspend operator fun invoke(nickname: String) {
-        repository.setCurrentUsersNickname(nickname)
+        repository.updateCurrentUsersNickname(nickname)
     }
 }

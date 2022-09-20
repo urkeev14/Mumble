@@ -10,7 +10,7 @@ interface IUiRepository {
      *
      * @param value value of a new configuration
      */
-    suspend fun updateUiConfiguration(value: UiConfiguration)
+    fun updateUiConfiguration(value: UiConfiguration)
 
     /**
      * Returns UI configuration

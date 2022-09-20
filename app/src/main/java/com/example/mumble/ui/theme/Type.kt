@@ -1,6 +1,6 @@
 package com.example.mumble.ui.theme
 
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -10,29 +10,47 @@ import androidx.compose.ui.unit.sp
 import com.example.mumble.R
 
 val MumbleFont = FontFamily(
-    Font(R.font.serif_regular, FontWeight.Normal),
-    Font(R.font.serif_bold, FontWeight.Bold),
-    Font(R.font.serif_italic, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.poppins_regular, FontWeight.Normal),
+    Font(R.font.poppins_bold, FontWeight.Bold),
+    Font(R.font.poppins_italic, FontWeight.Normal, FontStyle.Italic),
 )
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-    body1 = TextStyle(
+
+    headlineSmall = TextStyle(
         fontFamily = MumbleFont,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 24.sp
     ),
-    defaultFontFamily = MumbleFont
-    /* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
+    titleLarge = TextStyle(
+        fontFamily = MumbleFont,
+        fontWeight = FontWeight.Normal,
+        fontSize = 22.sp
+    ),
+    titleSmall = TextStyle(
+        fontFamily = MumbleFont,
+        fontWeight = FontWeight.Medium,
         fontSize = 14.sp
     ),
-    caption = TextStyle(
-        fontFamily = FontFamily.Default,
+    bodyLarge = TextStyle(
+        fontFamily = MumbleFont,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 14.sp,
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = MumbleFont,
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = MumbleFont,
+        fontWeight = FontWeight.Thin,
+        fontSize = 10.sp
+    ),
+    labelLarge = TextStyle(
+        fontFamily = MumbleFont,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp
     )
-    */
 )

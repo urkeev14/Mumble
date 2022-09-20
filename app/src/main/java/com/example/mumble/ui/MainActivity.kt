@@ -62,19 +62,9 @@ class MainActivity : ComponentActivity() {
         viewModel.setWifiConnectionAvailable(isAvailable)
     }
 
-    // TODO: Handle start and stop of service in [IntroductionScreen.kt] and [ChatsScreen.kt]
+    // TODO: Handle start and stop of service in [IntroductionScreen.kt] and [AvailableChatsScreen.kt]
     private fun startChatAnnouncementService() {
         val intent = Intent(this, ChatService::class.java)
         startService(intent)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        stopChatAnnouncementService()
-    }
-
-    private fun stopChatAnnouncementService() {
-        val intent = Intent(this, ChatService::class.java)
-        stopService(intent)
     }
 }

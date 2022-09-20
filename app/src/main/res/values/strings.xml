@@ -2,7 +2,7 @@
     <string name="app_name">Mumble</string>
     <string name="lets_have_fun">Let\'s have some fun</string>
     <string name="onboarding">Onboarding</string>
-    <string name="go">Go</string>
+    <string name="confirm">Confirm</string>
     <string name="chats">Chats</string>
     <string name="chat">Chat</string>
     <string name="go_back">Go back</string>
@@ -17,5 +17,11 @@
     <string name="chat_registration_failed">Failed to tell others that you are online :(</string>
     <string name="search">Search</string>
     <string name="nobody_online">Nobody online</string>
-    <string name="nobody_online_description">Fuck. There\'s nobody you can talk to...\nGo grab a beer and come back in a few minutes.</string>
+    <string name="nobody_online_description">Fuck. There\'s nobody you can talk to…\nGo grab a beer and come back in a few minutes.</string>
+    <string name="channel_description">Mumble notification channel</string>
+    <string name="available_users">Available</string>
+    <string name="conversations">Conversations</string>
+    <string name="lets_chat">Lets chat !</string>
+    <string name="ic_empty_inbox_title">No conversations yet...</string>
+    <string name="ic_empty_inbox_description">Go to available chats and chate with someone for Christ\'s sake!</string>
 </resources>

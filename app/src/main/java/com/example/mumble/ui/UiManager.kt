@@ -7,7 +7,7 @@ import com.example.mumble.utils.UiMessage
 import javax.inject.Inject
 
 interface IUiManager {
-    suspend fun updateUiConfiguration(uiConfiguration: UiConfiguration)
+    fun updateUiConfiguration(uiConfiguration: UiConfiguration)
     suspend fun setUiMessage(uiMessage: UiMessage)
 }
 
@@ -16,7 +16,7 @@ class UiManager @Inject constructor(
     private val setUiMessageUseCase: SetUiMessageUseCase
 ) : IUiManager {
 
-    override suspend fun updateUiConfiguration(uiConfiguration: UiConfiguration) {
+    override fun updateUiConfiguration(uiConfiguration: UiConfiguration) {
         updateUiConfigurationUseCase(uiConfiguration)
     }
 

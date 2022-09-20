@@ -3,6 +3,7 @@ package com.example.mumble.data.repository.impl
 import com.example.mumble.domain.model.ToolbarConfiguration
 import com.example.mumble.domain.model.UiConfiguration
 import com.example.mumble.domain.repository.IUiRepository
+import com.example.mumble.ui.navigation.Screen
 import com.example.mumble.utils.UiMessage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -14,11 +15,11 @@ import kotlinx.coroutines.flow.update
 class UiRepository : IUiRepository {
 
     private val uiConfiguration: MutableStateFlow<UiConfiguration> = MutableStateFlow(
-        UiConfiguration(ToolbarConfiguration(isVisible = false))
+        UiConfiguration(ToolbarConfiguration(isVisible = false, screen = Screen.Onboarding))
     )
     private val error: MutableSharedFlow<UiMessage> = MutableSharedFlow()
 
-    override suspend fun updateUiConfiguration(value: UiConfiguration) {
+    override fun updateUiConfiguration(value: UiConfiguration) {
         uiConfiguration.update { value }
     }
 

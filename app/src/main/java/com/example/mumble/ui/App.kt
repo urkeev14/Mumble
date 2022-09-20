@@ -1,81 +1,81 @@
 package com.example.mumble.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mumble.ui.components.Toolbar
-import com.example.mumble.ui.navigation.Route
-import com.example.mumble.ui.screens.chat.ChatScreen
-import com.example.mumble.ui.screens.chats.ChatsScreen
+import androidx.navigation.navDeepLink
+import com.example.mumble.ui.components.MyTopAppBar
+import com.example.mumble.ui.navigation.Screen
+import com.example.mumble.ui.screens.chats.available.AvailableChatsScreen
+import com.example.mumble.ui.screens.chats.chat.ChatScreen
+import com.example.mumble.ui.screens.chats.conversations.ConversationsScreen
 import com.example.mumble.ui.screens.introduction.IntroductionScreen
 import com.example.mumble.ui.screens.onboarding.OnboardingScreen
+import java.util.UUID
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(
     modifier: Modifier = Modifier,
     viewModel: AppViewModel = hiltViewModel(),
     navController: NavHostController = rememberNavController(),
-    startDestination: String = Route.ONBOARDING
 ) {
 
-    val context = LocalContext.current
-    val uiConfiguration = viewModel.uiConfiguration.collectAsState()
-    val uiMessage = viewModel.uiMessage.collectAsState(initial = null)
-    val toolbarConfig = uiConfiguration.value.toolbar
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scaffoldState = rememberScaffoldState(snackbarHostState = snackbarHostState)
+//    val context = LocalContext.current
+//    val uiMessage by viewModel.uiMessage.collectAsState(initial = null)
+    val uiConfiguration by viewModel.uiConfiguration.collectAsState()
 
-    LaunchedEffect(uiMessage.value) {
-        viewModel.uiMessage.collect {
-            snackbarHostState.showSnackbar(it.asString(context))
-        }
-    }
+//    LaunchedEffect(uiMessage) {
+//        viewModel.uiMessage.collect {
+//            snackbarHostState.showSnackbar(it.asString(context))
+//        }
+//    }
 
-    Scaffold(scaffoldState = scaffoldState, topBar = {
-        Toolbar(config = toolbarConfig, navController = navController)
+    // TODO Move navController to composable functions
+    Scaffold(topBar = {
+        MyTopAppBar(config = uiConfiguration.toolbar, navController = navController)
     }) { padding ->
         NavHost(
-            modifier = modifier,
+            modifier = modifier.padding(padding),
             navController = navController,
-            startDestination = startDestination
+            startDestination = uiConfiguration.toolbar.screen.route
         ) {
-            composable(Route.ONBOARDING) {
-                OnboardingScreen {
-                    navController.navigate(Route.INTRODUCTION) {
-                        popUpTo(Route.INTRODUCTION)
-                    }
-                }
+            composable(route = Screen.Onboarding.route) {
+                OnboardingScreen(navController = navController)
             }
-            composable(Route.INTRODUCTION) {
-                IntroductionScreen(padding) {
-                    navController.navigate(Route.CHATS)
-                }
+            composable(route = Screen.Introduction.route) {
+                IntroductionScreen(navController = navController)
             }
-            composable(Route.CHATS) {
-                ChatsScreen(padding) {
-                    navController.navigate(Route.CHAT with it.username) {
-                        popUpTo(Route.CHATS)
-                    }
-                }
+            composable(route = Screen.Chats.AvailableUsers.route) {
+                AvailableChatsScreen(navController = navController)
             }
-            composable(Route.CHAT) { backstackEntry ->
+            composable(route = Screen.Chats.Conversations.route) {
+                ConversationsScreen(navController = navController)
+            }
+//            composable(route = Screen.Chats.route) {
+//                ConversationOrAvailableChatsScreen(padding) {
+//                    // TODO When navigating to this screen, make sure user can't go back to change username.
+//                    navController.navigate(Screen.Chat(it.toString()).route) {
+//                        popUpTo(Screen.Chats.route)
+//                    }
+//                }
+//            }
+            composable(
+                route = Screen.Chat().route,
+                deepLinks = listOf(navDeepLink { uriPattern = "myapp://mumble.com/chat={userId}" })
+            ) { backstackEntry ->
                 val userId = backstackEntry.arguments?.getString("userId") ?: "-1"
-                ChatScreen(userId)
+                ChatScreen(UUID.fromString(userId))
             }
         }
     }
 }
-
-infix fun String.with(appended: String) = this.replaceAfter("/", appended)

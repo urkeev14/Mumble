@@ -6,6 +6,7 @@ import com.example.mumble.domain.model.ToolbarConfiguration
 import com.example.mumble.domain.model.UiConfiguration
 import com.example.mumble.domain.usecase.ReadUiConfigurationUseCase
 import com.example.mumble.domain.usecase.ReadUiMessageUseCase
+import com.example.mumble.ui.navigation.Screen
 import com.example.mumble.utils.UiMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharedFlow
@@ -29,6 +30,6 @@ class AppViewModel @Inject constructor(
     val uiConfiguration: StateFlow<UiConfiguration> = readUiConfigurationUseCase().stateIn(
         viewModelScope,
         started = SharingStarted.Lazily,
-        initialValue = UiConfiguration(ToolbarConfiguration(isVisible = false))
+        initialValue = UiConfiguration(ToolbarConfiguration(isVisible = false, screen = Screen.Onboarding))
     )
 }

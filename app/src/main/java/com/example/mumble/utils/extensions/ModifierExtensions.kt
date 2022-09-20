@@ -5,6 +5,9 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.min
@@ -38,3 +41,15 @@ fun Modifier.gradientBackground(colors: List<Color>, angle: Float) = this.then(
         )
     }
 )
+
+fun manipulateColor(color: Color, factor: Float): Color {
+    val r = Math.round(color.red * factor)
+    val g = Math.round(color.green * factor)
+    val b = Math.round(color.blue * factor)
+    return Color(
+        alpha = color.alpha,
+        red = min(r, 255).toFloat(),
+        green = min(g, 255).toFloat(),
+        blue = min(b, 255).toFloat()
+    )
+}

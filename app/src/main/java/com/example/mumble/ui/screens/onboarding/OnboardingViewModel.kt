@@ -29,9 +29,7 @@ class OnboardingViewModel @Inject constructor(
         viewModelScope.launch {
             delay(SHORT_DELAY)
             isLogoVisible.value = true
-            delay(LONG_DELAY)
-            isLogoVisible.value = false
-            delay(SHORT_DELAY)
+            delay(SHORT_DELAY * 4)
             _isUserOnboarded.emit(true)
         }
     }

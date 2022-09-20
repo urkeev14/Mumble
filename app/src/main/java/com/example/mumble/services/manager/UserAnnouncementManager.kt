@@ -2,26 +2,28 @@ package com.example.mumble.services.manager
 
 import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
+import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.example.mumble.R
-import com.example.mumble.domain.model.User
+import com.example.mumble.domain.model.UserEntity
 import com.example.mumble.domain.usecase.DeleteUserUseCase
+import com.example.mumble.domain.usecase.ReadAllUsersOnlineUseCase
 import com.example.mumble.domain.usecase.ReadCurrentUserUseCase
 import com.example.mumble.domain.usecase.SetUiMessageUseCase
 import com.example.mumble.domain.usecase.UpdateCurrentUserUseCase
 import com.example.mumble.services.ChatService
+import com.example.mumble.services.ChatService.Companion.ATTRIBUTE_KEY_USER_ID
 import com.example.mumble.utils.UiMessage
 import com.example.mumble.utils.extensions.isFromMumbleApp
-import com.example.mumble.utils.getAvailablePort
-import com.example.mumble.utils.getIPv4Address
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.net.InetAddress
+import java.util.UUID
 import javax.inject.Inject
 
 class UserAnnouncementManager @Inject constructor(
@@ -29,7 +31,8 @@ class UserAnnouncementManager @Inject constructor(
     private val readCurrentUserUseCase: ReadCurrentUserUseCase,
     private val setUiMessageUseCase: SetUiMessageUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
-    private val updateCurrentUserUseCase: UpdateCurrentUserUseCase
+    private val updateCurrentUserUseCase: UpdateCurrentUserUseCase,
+    private val readAllUsersOnlineUseCase: ReadAllUsersOnlineUseCase
 ) {
 
     private lateinit var lifecycleOwner: LifecycleOwner
@@ -51,55 +54,53 @@ class UserAnnouncementManager @Inject constructor(
                 val currentUser = readCurrentUserUseCase().first()
 
                 if (userUnregisteredUsername == currentUser.username) {
-                    updateCurrentUserUseCase(User())
+                    updateCurrentUserUseCase(UserEntity())
                     return@launch
                 }
 
-                deleteUserUseCase(userUnregisteredUsername)
+                val foundUser = readAllUsersOnlineUseCase().first().firstOrNull {
+                    it.username == userUnregisteredUsername
+                } ?: return@launch
+
+                deleteUserUseCase(foundUser.id)
             }
         }
 
         override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
+            // do nothing
         }
     }
 
-    fun observeChatAvailableAnnouncement(owner: LifecycleOwner) {
+    fun start(owner: LifecycleOwner) {
         this.lifecycleOwner = owner
 
         lifecycleOwner.lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 readCurrentUserUseCase().collect { user ->
-                    if (user.username.isEmpty() || user.isOnline) return@collect
+                    if (user.isReadyToChat.not()) return@collect
 
-                    announceUserReadyToChat(user.username)
+                    announceUserReadyToChat(user)
                 }
             }
         }
     }
 
-    private suspend fun announceUserReadyToChat(userNickname: String) {
-        val ipAddress = withContext(Dispatchers.IO) {
-            getIPv4Address()
-        }
-        if (ipAddress.isNullOrEmpty()) {
-            setUiMessage(R.string.ip_address_unavailable, true)
-            return
-        }
-
+    private suspend fun announceUserReadyToChat(userEntity: UserEntity) {
         nsdManager.registerService(
-            getServiceInfo(userNickname, ipAddress),
+            getServiceInfo(userEntity),
             NsdManager.PROTOCOL_DNS_SD,
             registrationListener
         )
     }
 
-    private suspend fun getServiceInfo(userNickname: String, ipAddress: String?) =
+    private suspend fun getServiceInfo(userEntity: UserEntity) =
         withContext(Dispatchers.IO) {
             NsdServiceInfo().apply {
-                serviceName = userNickname
+                serviceName = userEntity.username
                 serviceType = ChatService.SERVICE_TYPE
-                port = getAvailablePort()
-                host = InetAddress.getByName(ipAddress)
+                port = userEntity.port
+                host = InetAddress.getByName(userEntity.host)
+                setAttribute(ATTRIBUTE_KEY_USER_ID, UUID.randomUUID().toString())
             }
         }
 
@@ -111,6 +112,14 @@ class UserAnnouncementManager @Inject constructor(
                     isError = isError
                 )
             )
+        }
+    }
+
+    fun stop() {
+        try {
+            nsdManager.unregisterService(registrationListener)
+        } catch (e: Exception) {
+            Log.d(TAG, "stop: ${e.message}")
         }
     }
 

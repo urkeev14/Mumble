@@ -23,12 +23,12 @@ internal class UpdateCurrentUsersNicknameUseCaseTest {
     fun `invoke sets new nickname`() = runBlocking {
         val expected = "nickname"
         // Given that repository will successfully set current users nickname
-        coEvery { repository.setCurrentUsersNickname(expected) } returns Unit
+        coEvery { repository.updateCurrentUsersNickname(expected) } returns Unit
 
         // When use case is invoked
         sut(expected)
 
         // Then repository method for settings current users nickname will be invoked once
-        coVerify(exactly = 1) { repository.setCurrentUsersNickname(expected) }
+        coVerify(exactly = 1) { repository.updateCurrentUsersNickname(expected) }
     }
 }

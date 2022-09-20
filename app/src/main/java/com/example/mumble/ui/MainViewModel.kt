@@ -20,9 +20,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val updateWifiConnectionStateUseCase: UpdateWifiConnectionStateUseCase,
-    private val readUiConfigurationUseCase: ReadUiConfigurationUseCase,
-    private val readUiMessageUseCase: ReadUiMessageUseCase,
-    private val readCurrentUserUseCase: ReadCurrentUserUseCase
+    readUiConfigurationUseCase: ReadUiConfigurationUseCase,
+    readUiMessageUseCase: ReadUiMessageUseCase,
+    readCurrentUserUseCase: ReadCurrentUserUseCase
 ) : ViewModel() {
 
     val currentUser = readCurrentUserUseCase().shareIn(

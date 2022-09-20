@@ -58,7 +58,7 @@ class IntroductionViewModelTest {
             }
         }
     }
-    /*TODO: Fix when issue get resolved [https://github.com/mockk/mockk/issues/637]
+    /*TODO Fix when issue get resolved [https://github.com/mockk/mockk/issues/637]
     @Test
     fun `validateNickname calls handleInvalidNickname once when nickname is invalid`() = runTest{
         val successState = mockk<State.Outcome.Success<Unit>>()

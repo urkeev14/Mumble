@@ -1,6 +1,8 @@
 package com.example.mumble.utils
 
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.net.Inet4Address
 import java.net.NetworkInterface
 import java.net.ServerSocket
@@ -13,7 +15,7 @@ private val TAG = "Utils"
  * Get Local IPv4 address
  * @return address or null if local address not found
  */
-suspend fun getIPv4Address(): String? {
+suspend fun getIPv4Address(): String? = withContext(Dispatchers.IO) {
     try {
         val networkInterfaces: Enumeration<NetworkInterface> =
             NetworkInterface.getNetworkInterfaces()
@@ -27,14 +29,14 @@ suspend fun getIPv4Address(): String? {
                     inetAddress is Inet4Address &&
                     inetAddress.hostAddress?.contains("192.168") == true
                 ) {
-                    return inetAddress.hostName
+                    inetAddress.hostName
                 }
             }
         }
     } catch (ex: SocketException) {
         Log.e(TAG, "getIPv4Address: ", ex)
     }
-    return null
+    null
 }
 
 /**
@@ -42,4 +44,8 @@ suspend fun getIPv4Address(): String? {
  *
  * @return available port
  */
-fun getAvailablePort() = ServerSocket(0).localPort
+fun getAvailablePort(): Int {
+    val socket = ServerSocket(0)
+    socket.close()
+    return socket.localPort
+}
