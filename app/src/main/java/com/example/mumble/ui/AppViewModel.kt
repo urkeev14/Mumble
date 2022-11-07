@@ -30,6 +30,6 @@ class AppViewModel @Inject constructor(
     val uiConfiguration: StateFlow<UiConfiguration> = readUiConfigurationUseCase().stateIn(
         viewModelScope,
         started = SharingStarted.Lazily,
-        initialValue = UiConfiguration(ToolbarConfiguration(isVisible = false, screen = Screen.Onboarding))
+        initialValue = UiConfiguration(ToolbarConfiguration(isVisible = false, screen = Screen.Splash))
     )
 }

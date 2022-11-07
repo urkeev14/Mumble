@@ -45,7 +45,7 @@ fun MyTopAppBar(
     navController: NavController = rememberNavController(),
 ) {
     val (selectedTab, setSelectedTab) = remember { mutableStateOf<ChatsTabs>(ChatsTabs.Conversations) }
-    AnimatedVisibility(visible = config.screen !is Screen.Onboarding) {
+    AnimatedVisibility(visible = config.screen !is Screen.Splash) {
         Surface(
             modifier = Modifier
                 .fillMaxWidth()

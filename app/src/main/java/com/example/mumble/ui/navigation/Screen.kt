@@ -3,7 +3,7 @@ package com.example.mumble.ui.navigation
 import com.example.mumble.ui.screens.chats.ChatsTabs
 
 sealed class Screen(val route: String) {
-    object Onboarding : Screen("onboarding")
+    object Splash : Screen("splash")
     object Introduction : Screen("introduction")
 
     open class Chats(route: String) : Screen(route) {

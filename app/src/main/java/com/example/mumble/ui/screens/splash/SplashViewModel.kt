@@ -1,4 +1,4 @@
-package com.example.mumble.ui.screens.onboarding
+package com.example.mumble.ui.screens.splash
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OnboardingViewModel @Inject constructor(
+class SplashViewModel @Inject constructor(
     private val uiManager: IUiManager
 ) : ViewModel(), IUiManager by uiManager {
 

@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.update
 class UiRepository : IUiRepository {
 
     private val uiConfiguration: MutableStateFlow<UiConfiguration> = MutableStateFlow(
-        UiConfiguration(ToolbarConfiguration(isVisible = false, screen = Screen.Onboarding))
+        UiConfiguration(ToolbarConfiguration(isVisible = false, screen = Screen.Splash))
     )
     private val error: MutableSharedFlow<UiMessage> = MutableSharedFlow()
 

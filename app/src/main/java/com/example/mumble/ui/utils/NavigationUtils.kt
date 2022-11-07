@@ -19,7 +19,7 @@ fun NavController.navigate(screen: Screen) {
         }
         Screen.Introduction -> {
             navigate(screen.route) {
-                popUpTo(Screen.Onboarding.route) {
+                popUpTo(Screen.Splash.route) {
                     inclusive = true
                 }
             }

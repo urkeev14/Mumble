@@ -19,7 +19,7 @@ import com.example.mumble.ui.screens.chats.available.AvailableChatsScreen
 import com.example.mumble.ui.screens.chats.chat.ChatScreen
 import com.example.mumble.ui.screens.chats.conversations.ConversationsScreen
 import com.example.mumble.ui.screens.introduction.IntroductionScreen
-import com.example.mumble.ui.screens.onboarding.OnboardingScreen
+import com.example.mumble.ui.screens.splash.SplashScreen
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,8 +49,8 @@ fun App(
             navController = navController,
             startDestination = uiConfiguration.toolbar.screen.route
         ) {
-            composable(route = Screen.Onboarding.route) {
-                OnboardingScreen(navController = navController)
+            composable(route = Screen.Splash.route) {
+                SplashScreen(navController = navController)
             }
             composable(route = Screen.Introduction.route) {
                 IntroductionScreen(navController = navController)

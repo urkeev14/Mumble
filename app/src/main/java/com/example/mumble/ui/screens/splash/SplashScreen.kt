@@ -1,4 +1,4 @@
-package com.example.mumble.ui.screens.onboarding
+package com.example.mumble.ui.screens.splash
 
 import android.content.res.Configuration
 import androidx.compose.animation.AnimatedVisibility
@@ -29,17 +29,17 @@ import com.example.mumble.utils.extensions.observeFlowSafely
 import com.example.mumble.utils.extensions.usingContext
 
 @Composable
-fun OnboardingScreen(
-    viewModel: OnboardingViewModel = hiltViewModel(),
+fun SplashScreen(
+    viewModel: SplashViewModel = hiltViewModel(),
     navController: NavController = rememberNavController(),
 ) {
     usingContext {
         viewModel.updateUiConfiguration(
             UiConfiguration(
                 ToolbarConfiguration(
-                    title = it.resources.getString(R.string.onboarding),
+                    title = it.resources.getString(R.string.splash),
                     isVisible = false,
-                    screen = Screen.Onboarding
+                    screen = Screen.Splash
                 )
             )
         )
@@ -53,14 +53,14 @@ fun OnboardingScreen(
 
     AnimatedVisibility(
         visible = viewModel.isLogoVisible.value,
-        enter = fadeIn(animationSpec = tween(OnboardingViewModel.ANIMATION_TIME)),
+        enter = fadeIn(animationSpec = tween(SplashViewModel.ANIMATION_TIME)),
     ) {
-        OnboardingContent()
+        SplashContent()
     }
 }
 
 @Composable
-private fun OnboardingContent() {
+private fun SplashContent() {
     Column(
         modifier = Modifier
             .fillMaxSize(),
@@ -79,10 +79,10 @@ private fun OnboardingContent() {
 @Preview(showSystemUi = true, showBackground = true)
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
-fun PreviewOnboardingScreen() {
+fun PreviewSplashScreen() {
     MumbleTheme() {
         Surface {
-            OnboardingContent()
+            SplashContent()
         }
     }
 }
