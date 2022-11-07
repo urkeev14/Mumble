@@ -16,7 +16,7 @@ import androidx.navigation.navDeepLink
 import com.example.mumble.ui.components.MyTopAppBar
 import com.example.mumble.ui.navigation.Screen
 import com.example.mumble.ui.screens.chats.available.AvailableChatsScreen
-import com.example.mumble.ui.screens.chats.chat.ChatScreen
+import com.example.mumble.ui.screens.chat.ChatScreen
 import com.example.mumble.ui.screens.chats.conversations.ConversationsScreen
 import com.example.mumble.ui.screens.introduction.IntroductionScreen
 import com.example.mumble.ui.screens.splash.SplashScreen

@@ -1,4 +1,4 @@
-package com.example.mumble.ui.screens.chats.chat.notification
+package com.example.mumble.ui.screens.chat.notification
 
 import android.app.Notification
 import android.app.Notification.DEFAULT_SOUND

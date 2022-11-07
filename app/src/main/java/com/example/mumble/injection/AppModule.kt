@@ -14,8 +14,8 @@ import com.example.mumble.services.manager.UserAnnouncementManager
 import com.example.mumble.services.manager.UserDiscoveryManager
 import com.example.mumble.ui.IUiManager
 import com.example.mumble.ui.UiManager
-import com.example.mumble.ui.screens.chats.chat.notification.NotificationHandler
-import com.example.mumble.ui.screens.chats.chat.notification.NotificationHandlerImpl
+import com.example.mumble.ui.screens.chat.notification.NotificationHandler
+import com.example.mumble.ui.screens.chat.notification.NotificationHandlerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

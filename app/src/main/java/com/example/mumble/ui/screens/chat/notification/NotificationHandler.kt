@@ -1,4 +1,4 @@
-package com.example.mumble.ui.screens.chats.chat.notification
+package com.example.mumble.ui.screens.chat.notification
 
 import com.example.mumble.ui.model.Message
 

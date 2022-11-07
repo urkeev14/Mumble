@@ -1,4 +1,4 @@
-package com.example.mumble.ui.screens.chats.chat
+package com.example.mumble.ui.screens.chat
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column

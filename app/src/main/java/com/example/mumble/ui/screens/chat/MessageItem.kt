@@ -1,4 +1,4 @@
-package com.example.mumble.ui.screens.chats.chat
+package com.example.mumble.ui.screens.chat
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

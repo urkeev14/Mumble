@@ -7,7 +7,7 @@ import com.example.mumble.domain.usecase.ReadUserByIpAddressUseCase
 import com.example.mumble.domain.usecase.UpdateCurrentUserUseCase
 import com.example.mumble.services.manager.chat.IChatManager
 import com.example.mumble.services.manager.chat.message.MessageManager
-import com.example.mumble.ui.screens.chats.chat.notification.NotificationHandler
+import com.example.mumble.ui.screens.chat.notification.NotificationHandler
 import com.example.mumble.utils.getAvailablePort
 import com.example.mumble.utils.getIPv4Address
 import kotlinx.coroutines.CoroutineScope
