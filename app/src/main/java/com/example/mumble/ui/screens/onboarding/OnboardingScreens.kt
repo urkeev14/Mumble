@@ -48,12 +48,9 @@ fun OnboardingScreens(
             inactiveColor = MaterialTheme.colorScheme.primaryContainer
         )
     }
-
-
 }
 
 @Preview
 @Composable
 fun PreviewWelcomeScreen() {
-
 }

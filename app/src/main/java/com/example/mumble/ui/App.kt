@@ -19,8 +19,8 @@ import com.example.mumble.ui.screens.chat.ChatScreen
 import com.example.mumble.ui.screens.chats.available.AvailableChatsScreen
 import com.example.mumble.ui.screens.chats.conversations.ConversationsScreen
 import com.example.mumble.ui.screens.introduction.IntroductionScreen
-import com.example.mumble.ui.screens.splash.SplashScreen
 import com.example.mumble.ui.screens.onboarding.OnboardingScreens
+import com.example.mumble.ui.screens.splash.SplashScreen
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)

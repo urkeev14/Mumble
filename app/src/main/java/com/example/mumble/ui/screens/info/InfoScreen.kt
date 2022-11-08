@@ -29,7 +29,9 @@ import com.example.mumble.ui.theme.spaceXL
 
 @Composable
 fun InfoScreen(
-    modifier: Modifier = Modifier, variant: InfoScreenVariants, onDone: (() -> Unit)? = null
+    modifier: Modifier = Modifier,
+    variant: InfoScreenVariants,
+    onDone: (() -> Unit)? = null
 ) {
 
     Column(
