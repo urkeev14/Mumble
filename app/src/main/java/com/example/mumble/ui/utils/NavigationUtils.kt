@@ -5,6 +5,13 @@ import com.example.mumble.ui.navigation.Screen
 
 fun NavController.navigate(screen: Screen) {
     when (screen) {
+        Screen.Onboarding -> {
+            navigate(screen.route) {
+                popUpTo(Screen.Splash.route) {
+                    inclusive = true
+                }
+            }
+        }
         is Screen.Chat -> {
             navigate(screen.route)
         }
@@ -19,8 +26,10 @@ fun NavController.navigate(screen: Screen) {
         }
         Screen.Introduction -> {
             navigate(screen.route) {
-                popUpTo(Screen.Splash.route) {
-                    inclusive = true
+                previousBackStackEntry?.id?.let {
+                    popUpTo(it) {
+                        inclusive = true
+                    }
                 }
             }
         }

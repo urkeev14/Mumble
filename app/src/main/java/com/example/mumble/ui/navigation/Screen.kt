@@ -4,6 +4,7 @@ import com.example.mumble.ui.screens.chats.ChatsTabs
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
+    object Onboarding : Screen("onboarding")
     object Introduction : Screen("introduction")
 
     open class Chats(route: String) : Screen(route) {

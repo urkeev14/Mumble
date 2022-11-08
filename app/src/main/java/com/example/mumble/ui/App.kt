@@ -15,11 +15,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
 import com.example.mumble.ui.components.MyTopAppBar
 import com.example.mumble.ui.navigation.Screen
-import com.example.mumble.ui.screens.chats.available.AvailableChatsScreen
 import com.example.mumble.ui.screens.chat.ChatScreen
+import com.example.mumble.ui.screens.chats.available.AvailableChatsScreen
 import com.example.mumble.ui.screens.chats.conversations.ConversationsScreen
 import com.example.mumble.ui.screens.introduction.IntroductionScreen
 import com.example.mumble.ui.screens.splash.SplashScreen
+import com.example.mumble.ui.screens.onboarding.OnboardingScreens
 import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,17 +31,12 @@ fun App(
     navController: NavHostController = rememberNavController(),
 ) {
 
-//    val context = LocalContext.current
-//    val uiMessage by viewModel.uiMessage.collectAsState(initial = null)
     val uiConfiguration by viewModel.uiConfiguration.collectAsState()
 
-//    LaunchedEffect(uiMessage) {
-//        viewModel.uiMessage.collect {
-//            snackbarHostState.showSnackbar(it.asString(context))
-//        }
-//    }
-
     // TODO Move navController to composable functions
+    // TODO Extract composable instantiation in nav host. Create a for loop of screens,
+    //  and map Screen sealed class to concrete screen
+
     Scaffold(topBar = {
         MyTopAppBar(config = uiConfiguration.toolbar, navController = navController)
     }) { padding ->
@@ -51,6 +47,9 @@ fun App(
         ) {
             composable(route = Screen.Splash.route) {
                 SplashScreen(navController = navController)
+            }
+            composable(route = Screen.Onboarding.route) {
+                OnboardingScreens(navController = navController)
             }
             composable(route = Screen.Introduction.route) {
                 IntroductionScreen(navController = navController)
