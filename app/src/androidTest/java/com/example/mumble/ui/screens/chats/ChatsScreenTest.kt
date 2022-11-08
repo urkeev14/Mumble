@@ -60,7 +60,7 @@ internal class ChatsScreenTest {
             every { viewModel.search } returns MutableStateFlow("")
             every { viewModel.usersOnline } returns MutableStateFlow(emptyList())
 
-            onNodeWithTag(ChatsScreenTags.NobodyOnlineScreen.toString()).assertExists()
+            onNodeWithTag(ChatsScreenTags.InfoScreen.toString()).assertExists()
                 .assertIsDisplayed()
             onNodeWithTag(ChatsScreenTags.ChatUsersWithSearch.toString()).assertDoesNotExist()
         }
@@ -72,7 +72,7 @@ internal class ChatsScreenTest {
             every { viewModel.search } returns MutableStateFlow("")
             every { viewModel.usersOnline } returns MutableStateFlow(fakeUsers)
 
-            onNodeWithTag(ChatsScreenTags.NobodyOnlineScreen.toString()).assertDoesNotExist()
+            onNodeWithTag(ChatsScreenTags.InfoScreen.toString()).assertDoesNotExist()
             onNodeWithTag(ChatsScreenTags.ChatUsersWithSearch.toString()).assertExists()
                 .assertIsDisplayed()
         }
@@ -84,7 +84,7 @@ internal class ChatsScreenTest {
             every { viewModel.search } returns MutableStateFlow(fakeUsers.first().username)
             every { viewModel.usersOnline } returns MutableStateFlow(fakeUsers)
 
-            onNodeWithTag(ChatsScreenTags.NobodyOnlineScreen.toString()).assertDoesNotExist()
+            onNodeWithTag(ChatsScreenTags.InfoScreen.toString()).assertDoesNotExist()
             onNodeWithTag(ChatsScreenTags.ChatUsersWithSearch.toString()).assertExists()
                 .assertIsDisplayed()
         }

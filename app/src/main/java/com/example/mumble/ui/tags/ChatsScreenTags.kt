@@ -4,8 +4,8 @@ enum class ChatsScreenTags {
     ChatUsersWithSearch {
         override fun toString() = "chatsScreenWithSearch"
     },
-    NobodyOnlineScreen {
-        override fun toString() = "nobodyOnlineScreen"
+    InfoScreen {
+        override fun toString() = "info"
     },
     Search {
         override fun toString() = "search"

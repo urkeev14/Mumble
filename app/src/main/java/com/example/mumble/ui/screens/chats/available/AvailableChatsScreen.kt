@@ -24,6 +24,8 @@ import com.example.mumble.domain.model.UiConfiguration
 import com.example.mumble.ui.components.Search
 import com.example.mumble.ui.model.User
 import com.example.mumble.ui.navigation.Screen
+import com.example.mumble.ui.screens.info.InfoScreen
+import com.example.mumble.ui.screens.info.InfoScreenVariants
 import com.example.mumble.ui.tags.ChatsScreenTags
 import com.example.mumble.ui.theme.MumbleTheme
 import com.example.mumble.ui.theme.spaceS
@@ -63,11 +65,7 @@ private fun AvailableChatsScreenContent(
     onStartChat: ((User) -> Unit) = {},
 ) {
     if (users.isEmpty()) {
-        EmptyScreen(
-            iconRedId = R.drawable.ic_alone,
-            titleResId = R.string.nobody_online,
-            descriptionResId = R.string.nobody_online_description
-        )
+        InfoScreen(variant = InfoScreenVariants.NobodyAvailableScreen)
     } else {
         AvailableChatsWithSearch(
             search = search,

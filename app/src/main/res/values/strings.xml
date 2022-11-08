@@ -22,6 +22,13 @@
     <string name="available_users">Available</string>
     <string name="conversations">Conversations</string>
     <string name="lets_chat">Lets chat !</string>
-    <string name="ic_empty_inbox_title">No conversations yet...</string>
-    <string name="ic_empty_inbox_description">Go to available chats and chate with someone for Christ\'s sake!</string>
+    <string name="empty_inbox_title">No conversations yet...</string>
+    <string name="empty_inbox_description">Go to available chats and chate with someone for Christ\'s sake!</string>
+    <string name="encrypted_messages_title">Encryption</string>
+    <string name="encrypted_messages_description">This means that all our messages are encrypted, so no hackers can understand them, and will be decoded only once the message gets received by other user!</string>
+    <string name="message_removed_title">Temporary messages</string>
+    <string name="message_removed_description">Every message you send and receive will be visible only during the application lifetime. Once you kill the app, all the messages get deleted.</string>
+    <string name="no_storage_title">Nothing gets stored</string>
+    <string name="no_storage_description">No message or data is being stored at some server. Your data is secure here!</string>
+    <string name="done">Done</string>
 </resources>

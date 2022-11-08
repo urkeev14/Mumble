@@ -28,7 +28,8 @@ import com.example.mumble.domain.model.UiConfiguration
 import com.example.mumble.ui.components.Search
 import com.example.mumble.ui.model.Conversation
 import com.example.mumble.ui.navigation.Screen
-import com.example.mumble.ui.screens.chats.available.EmptyScreen
+import com.example.mumble.ui.screens.info.InfoScreen
+import com.example.mumble.ui.screens.info.InfoScreenVariants
 import com.example.mumble.ui.tags.ChatsScreenTags
 import com.example.mumble.ui.theme.MumbleTheme
 import com.example.mumble.ui.theme.spaceS
@@ -74,11 +75,7 @@ private fun ConversationsContent(
     onConversationClick: (UUID) -> Unit
 ) {
     if (conversations.isEmpty()) {
-        EmptyScreen(
-            iconRedId = R.drawable.ic_empty_inbox,
-            titleResId = R.string.ic_empty_inbox_title,
-            descriptionResId = R.string.ic_empty_inbox_description
-        )
+        InfoScreen(variant = InfoScreenVariants.EmptyScreen)
     } else {
         Column(
             modifier = modifier

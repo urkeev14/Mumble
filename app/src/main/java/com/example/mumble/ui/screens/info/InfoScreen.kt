@@ -1,14 +1,13 @@
-package com.example.mumble.ui.screens.chats.available
+package com.example.mumble.ui.screens.info
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -22,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.mumble.R
 import com.example.mumble.ui.tags.ChatsScreenTags
 import com.example.mumble.ui.theme.MumbleTheme
 import com.example.mumble.ui.theme.spaceL
@@ -30,16 +28,13 @@ import com.example.mumble.ui.theme.spaceM
 import com.example.mumble.ui.theme.spaceXL
 
 @Composable
-fun EmptyScreen(
-    modifier: Modifier = Modifier,
-    @DrawableRes iconRedId: Int,
-    @StringRes titleResId: Int,
-    @StringRes descriptionResId: Int,
+fun InfoScreen(
+    modifier: Modifier = Modifier, variant: InfoScreenVariants, onDone: (() -> Unit)? = null
 ) {
 
     Column(
         modifier = modifier
-            .testTag(ChatsScreenTags.NobodyOnlineScreen.toString())
+            .testTag(ChatsScreenTags.InfoScreen.toString())
             .padding(start = spaceXL, end = spaceXL)
             .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -48,34 +43,36 @@ fun EmptyScreen(
 
         Icon(
             modifier = Modifier.size(150.dp),
-            painter = painterResource(id = iconRedId),
+            painter = painterResource(id = variant.iconResId),
             contentDescription = null,
             tint = MaterialTheme.colorScheme.onBackground
         )
         Spacer(modifier = Modifier.size(width = 0.dp, height = spaceM))
         Text(
-            text = stringResource(id = titleResId),
+            text = stringResource(id = variant.titleResId),
             style = MaterialTheme.typography.headlineSmall,
         )
         Spacer(modifier = Modifier.size(width = 0.dp, height = spaceL))
         Text(
-            text = stringResource(id = descriptionResId),
+            text = stringResource(id = variant.descriptionResId),
             textAlign = TextAlign.Center,
         )
+        variant.actionButton?.let {
+            Spacer(modifier = Modifier.size(spaceXL))
+            Button(onClick = { onDone?.invoke() }) {
+                Text(text = stringResource(id = it))
+            }
+        }
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun PreviewNobodyOnlineScreen() {
+fun PreviewInfoScreen() {
     MumbleTheme {
         Surface {
-            EmptyScreen(
-                iconRedId = R.drawable.ic_alone,
-                titleResId = R.string.nobody_online,
-                descriptionResId = R.string.nobody_online_description
-            )
+            InfoScreen(variant = InfoScreenVariants.onboardingScreens.last())
         }
     }
 }
