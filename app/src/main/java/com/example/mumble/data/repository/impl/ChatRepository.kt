@@ -5,7 +5,7 @@ import com.example.mumble.domain.model.MessageEntity
 import com.example.mumble.domain.model.OutgoingMessageEntity
 import com.example.mumble.domain.model.UserEntity
 import com.example.mumble.domain.repository.IChatRepository
-import com.example.mumble.domain.repository.source.IChatLocalDataSource
+import com.example.mumble.domain.repository.source.local.IChatLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import java.util.UUID

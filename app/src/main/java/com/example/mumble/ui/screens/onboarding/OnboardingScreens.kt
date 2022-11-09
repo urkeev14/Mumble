@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mumble.ui.navigation.Screen
@@ -24,6 +25,7 @@ import com.google.accompanist.pager.rememberPagerState
 @Composable
 fun OnboardingScreens(
     modifier: Modifier = Modifier,
+    viewModel: OnboardingViewModel = hiltViewModel(),
     navController: NavController = rememberNavController()
 ) {
 
@@ -39,6 +41,7 @@ fun OnboardingScreens(
         ) { position ->
             InfoScreen(variant = screens[position]) {
                 navController.navigate(Screen.Introduction)
+                viewModel.setUserIsOnboarded()
             }
         }
         HorizontalPagerIndicator(

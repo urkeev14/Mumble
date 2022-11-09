@@ -1,4 +1,4 @@
-package com.example.mumble.domain.repository.source
+package com.example.mumble.domain.repository.source.local
 
 import com.example.mumble.domain.model.ConversationEntity
 import com.example.mumble.domain.model.MessageEntity

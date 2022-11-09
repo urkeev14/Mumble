@@ -1,5 +1,7 @@
 package com.example.mumble.injection
 
+import android.content.Context
+import androidx.datastore.preferences.preferencesDataStore
 import com.example.mumble.data.mapper.Mapper
 import com.example.mumble.data.mapper.impl.DateMapper
 import com.example.mumble.data.mapper.impl.dto.MessageDtoMapper
@@ -13,6 +15,7 @@ import com.example.mumble.data.repository.impl.ConnectivityRepository
 import com.example.mumble.data.repository.impl.UiRepository
 import com.example.mumble.data.repository.source.local.ChatLocalDataSource
 import com.example.mumble.data.repository.source.local.ConnectivityLocalDataSource
+import com.example.mumble.data.repository.source.preferences.IUserPreferencesImpl
 import com.example.mumble.domain.dto.MessageDto
 import com.example.mumble.domain.dto.UserDto
 import com.example.mumble.domain.model.AvatarEntity
@@ -21,8 +24,9 @@ import com.example.mumble.domain.model.UserEntity
 import com.example.mumble.domain.repository.IChatRepository
 import com.example.mumble.domain.repository.IConnectivityRepository
 import com.example.mumble.domain.repository.IUiRepository
-import com.example.mumble.domain.repository.source.IChatLocalDataSource
-import com.example.mumble.domain.repository.source.IConnectivityLocalDataSource
+import com.example.mumble.domain.repository.source.local.IChatLocalDataSource
+import com.example.mumble.domain.repository.source.local.IConnectivityLocalDataSource
+import com.example.mumble.domain.repository.source.preferences.IUserPreferences
 import com.example.mumble.domain.usecase.MessageWithUser
 import com.example.mumble.ui.model.Avatar
 import com.example.mumble.ui.model.Message
@@ -30,6 +34,7 @@ import com.example.mumble.ui.model.User
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,6 +43,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class DataModule {
+
+    private val Context.userDatastore by preferencesDataStore(
+        name = "user_preferences"
+    )
 
     // ========== Repositories ==========
     @Singleton
@@ -75,6 +84,13 @@ class DataModule {
     @Provides
     fun provideIConnectivityLocalDataSource(): IConnectivityLocalDataSource {
         return ConnectivityLocalDataSource()
+    }
+
+    // ========== Mappers ==========
+    @Singleton
+    @Provides
+    fun provideUserPreferences(@ApplicationContext context: Context): IUserPreferences {
+        return IUserPreferencesImpl(context.userDatastore)
     }
 
     // ========== Mappers ==========

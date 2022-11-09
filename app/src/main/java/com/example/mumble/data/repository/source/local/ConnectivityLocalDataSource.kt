@@ -1,6 +1,6 @@
 package com.example.mumble.data.repository.source.local
 
-import com.example.mumble.domain.repository.source.IConnectivityLocalDataSource
+import com.example.mumble.domain.repository.source.local.IConnectivityLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 

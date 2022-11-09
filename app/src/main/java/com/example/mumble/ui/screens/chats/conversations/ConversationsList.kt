@@ -90,7 +90,7 @@ private fun ConversationsContent(
                     .testTag(ChatsScreenTags.Search.toString()),
                 onValueChange = onSearchChange
             )
-            ConversationList(conversations = conversations, onConversationClick = {
+            ConversationList(conversations = fakeConversations, onConversationClick = {
                 val id = it.messages.first { message ->
                     message.creator.isCurrentUser.not()
                 }.creator.id

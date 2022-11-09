@@ -47,7 +47,11 @@ fun SplashScreen(
 
     viewModel.isUserOnboarded.observeFlowSafely { isUserOnboarded ->
         if (isUserOnboarded) {
-            navController.navigate(Screen.Onboarding)
+            if (viewModel.getIsUserOnboarded()) {
+                navController.navigate(Screen.Introduction)
+            } else {
+                navController.navigate(Screen.Onboarding)
+            }
         }
     }
 

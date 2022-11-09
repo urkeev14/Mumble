@@ -3,17 +3,20 @@ package com.example.mumble.ui.screens.splash
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mumble.domain.repository.source.preferences.IUserPreferences
 import com.example.mumble.ui.IUiManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val uiManager: IUiManager
+    private val uiManager: IUiManager,
+    private val userPreferences: IUserPreferences
 ) : ViewModel(), IUiManager by uiManager {
 
     init {
@@ -32,6 +35,10 @@ class SplashViewModel @Inject constructor(
             delay(SHORT_DELAY * 4)
             _isUserOnboarded.emit(true)
         }
+    }
+
+    suspend fun getIsUserOnboarded(): Boolean {
+        return userPreferences.getIsOnboarded().first()
     }
 
     companion object {

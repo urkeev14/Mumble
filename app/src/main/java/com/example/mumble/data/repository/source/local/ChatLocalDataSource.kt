@@ -4,7 +4,7 @@ import com.example.mumble.domain.model.ConversationEntity
 import com.example.mumble.domain.model.MessageEntity
 import com.example.mumble.domain.model.OutgoingMessageEntity
 import com.example.mumble.domain.model.UserEntity
-import com.example.mumble.domain.repository.source.IChatLocalDataSource
+import com.example.mumble.domain.repository.source.local.IChatLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
