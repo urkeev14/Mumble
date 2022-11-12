@@ -7,8 +7,8 @@ import com.example.mumble.ui.model.User
 import com.example.mumble.ui.theme.RandomColors
 import java.util.UUID
 
-private val currentUserId = UUID.randomUUID()
-private val user2Id = UUID.randomUUID()
+val currentUserId = UUID.randomUUID()
+val user2Id = UUID.randomUUID()
 val fakeUsers = listOf(
     User(
         id = currentUserId,

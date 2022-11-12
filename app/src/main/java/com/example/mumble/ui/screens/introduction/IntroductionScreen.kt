@@ -23,8 +23,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mumble.R
-import com.example.mumble.domain.model.ToolbarConfiguration
-import com.example.mumble.domain.model.UiConfiguration
+import com.example.mumble.domain.model.ToolbarState
+import com.example.mumble.domain.model.UiState
 import com.example.mumble.ui.components.Disclaimer
 import com.example.mumble.ui.components.ValidatedInputField
 import com.example.mumble.ui.navigation.Screen
@@ -47,15 +47,14 @@ fun IntroductionScreen(
     navController: NavController = rememberNavController(),
     viewModel: IntroductionViewModel = hiltViewModel(),
 ) {
-    // TODO: Implement sending a flag to repository flowable that triggers STOP action of ChatAnnouncementService
 
     val error by viewModel.stateErrorMessage.collectAsState(initial = null)
     val nickname by viewModel.nickname
 
     usingContext {
-        viewModel.updateUiConfiguration(
-            UiConfiguration(
-                ToolbarConfiguration(
+        viewModel.updateUiState(
+            UiState(
+                ToolbarState(
                     title = it.resources.getString(R.string.introduction),
                     screen = Screen.Introduction
                 )
@@ -65,7 +64,7 @@ fun IntroductionScreen(
 
     viewModel.stateGoToChatsScreen.observeFlowSafely(action = { goToChatsScreen ->
         if (goToChatsScreen) {
-            navController.navigate(Screen.Chats.Conversations)
+            navController.navigate(Screen.Introduction, Screen.Chats.Conversations)
         }
     })
 
@@ -84,7 +83,6 @@ fun IntroductionScreenContent(
     onValidateNickname: () -> Unit = {},
     error: UiMessage? = null
 ) {
-
     ConstraintLayout(
         introductionScreenContentConstraintSet(),
         modifier = Modifier

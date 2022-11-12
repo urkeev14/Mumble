@@ -30,7 +30,6 @@ fun OnboardingScreens(
 ) {
 
     val screens = InfoScreenVariants.onboardingScreens
-
     val pagerState = rememberPagerState()
 
     Box(modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
@@ -40,7 +39,7 @@ fun OnboardingScreens(
             verticalAlignment = Alignment.Top
         ) { position ->
             InfoScreen(variant = screens[position]) {
-                navController.navigate(Screen.Introduction)
+                navController.navigate(Screen.Onboarding, Screen.Introduction)
                 viewModel.setUserIsOnboarded()
             }
         }

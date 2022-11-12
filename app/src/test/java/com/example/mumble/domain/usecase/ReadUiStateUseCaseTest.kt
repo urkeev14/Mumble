@@ -1,6 +1,6 @@
 package com.example.mumble.domain.usecase
 
-import com.example.mumble.domain.model.UiConfiguration
+import com.example.mumble.domain.model.UiState
 import com.example.mumble.domain.repository.IUiRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -11,7 +11,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
 
-internal class ReadUiConfigurationUseCaseTest {
+internal class ReadUiStateUseCaseTest {
 
     private lateinit var repository: IUiRepository
     private lateinit var sut: ReadUiConfigurationUseCase
@@ -24,7 +24,7 @@ internal class ReadUiConfigurationUseCaseTest {
 
     @Test
     fun `invoke returns UiConfiguration when repository returns UiConfiguration`() = runBlocking {
-        val expected = UiConfiguration()
+        val expected = UiState()
 
         every { repository.getUiConfig() } returns flowOf(expected)
 

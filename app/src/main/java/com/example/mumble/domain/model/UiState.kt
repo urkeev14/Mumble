@@ -11,11 +11,19 @@ import java.util.UUID
  * @property isBackButtonVisible
  * @property isToolbarVisible
  */
-data class UiConfiguration(
-    val toolbar: ToolbarConfiguration = ToolbarConfiguration(screen = Screen.Introduction)
-)
+data class UiState(
+    val toolbar: ToolbarState = ToolbarState(screen = Screen.Introduction)
+) {
+    override fun equals(other: Any?): Boolean {
+        return other is UiState && other.toolbar.id == toolbar.id && other.toolbar.screen == toolbar.screen
+    }
 
-data class ToolbarConfiguration(
+    override fun hashCode(): Int {
+        return toolbar.id.hashCode()
+    }
+}
+
+data class ToolbarState(
     val title: String = "",
     val isVisible: Boolean = true,
     val color: Color? = null,
@@ -25,7 +33,7 @@ data class ToolbarConfiguration(
     val id: UUID = UUID.randomUUID()
 
     override fun equals(other: Any?): Boolean {
-        return other is ToolbarConfiguration && other.id == id
+        return other is ToolbarState && other.id == id
     }
 
     override fun hashCode(): Int {

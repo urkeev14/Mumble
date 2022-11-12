@@ -25,15 +25,15 @@ class SplashViewModel @Inject constructor(
 
     val isLogoVisible = mutableStateOf(false)
 
-    private val _isUserOnboarded = MutableSharedFlow<Boolean>()
-    val isUserOnboarded = _isUserOnboarded.asSharedFlow()
+    private val _isSplashAnimationOver = MutableSharedFlow<Boolean>()
+    val isSplashAnimationOver = _isSplashAnimationOver.asSharedFlow()
 
     private fun startLogoAnimation() {
         viewModelScope.launch {
             delay(SHORT_DELAY)
             isLogoVisible.value = true
             delay(SHORT_DELAY * 4)
-            _isUserOnboarded.emit(true)
+            _isSplashAnimationOver.emit(true)
         }
     }
 

@@ -12,13 +12,22 @@ sealed class Screen(val route: String) {
         object AvailableUsers : Chats("availableUsers")
 
         companion object {
-            fun getFromTab(tab: ChatsTabs): Screen {
-                return when (tab) {
-                    ChatsTabs.AvailableUsers -> AvailableUsers
-                    ChatsTabs.Conversations -> Conversations
+            fun getScreen(index: Int): Screen {
+                return when (index) {
+                    ChatsTabs.AvailableUsers.index -> AvailableUsers
+                    ChatsTabs.Conversations.index -> Conversations
+                    else -> throw Exception("Wrong tab index !")
                 }
             }
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        return other is Screen && other.route == route
+    }
+
+    override fun hashCode(): Int {
+        return route.hashCode()
     }
 
     class Chat(uuid: String? = "{userId}") : Screen("chat/$uuid")

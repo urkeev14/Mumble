@@ -3,36 +3,32 @@ package com.example.mumble.ui.utils
 import androidx.navigation.NavController
 import com.example.mumble.ui.navigation.Screen
 
-fun NavController.navigate(screen: Screen) {
-    when (screen) {
+fun NavController.navigate(origin: Screen, destination: Screen) {
+    when (destination) {
         Screen.Onboarding -> {
-            navigate(screen.route) {
-                popUpTo(Screen.Splash.route) {
+            navigate(destination.route) {
+                popUpTo(origin.route) {
+                    inclusive = true
+                }
+            }
+        }
+        Screen.Introduction -> {
+            navigate(destination.route) {
+                popUpTo(origin.route) {
                     inclusive = true
                 }
             }
         }
         is Screen.Chat -> {
-            navigate(screen.route)
+            navigate(destination.route)
         }
         is Screen.Chats -> {
-            navigate(screen.route) {
-                previousBackStackEntry?.id?.let {
-                    popUpTo(it) {
-                        inclusive = true
-                    }
+            navigate(destination.route) {
+                popUpTo(origin.route) {
+                    inclusive = true
                 }
             }
         }
-        Screen.Introduction -> {
-            navigate(screen.route) {
-                previousBackStackEntry?.id?.let {
-                    popUpTo(it) {
-                        inclusive = true
-                    }
-                }
-            }
-        }
-        else -> throw Exception("Should not navigate back to ${screen.route}")
+        else -> throw Exception("Should not navigate back to ${origin.route}")
     }
 }

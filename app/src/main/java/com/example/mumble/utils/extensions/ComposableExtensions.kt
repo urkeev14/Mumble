@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 @Composable
+fun localContext(): Context = LocalContext.current
+
+@Composable
 inline fun <reified T> Flow<T>.observeFlowSafely(
     lifecycleOwner: LifecycleOwner = LocalLifecycleOwner.current,
     minActiveState: Lifecycle.State = Lifecycle.State.STARTED,
@@ -27,7 +30,7 @@ inline fun <reified T> Flow<T>.observeFlowSafely(
 
 @Composable
 fun usingContext(action: suspend (Context) -> Unit) {
-    val context = LocalContext.current
+    val context = localContext()
     LaunchedEffect(key1 = null, block = {
         action(context)
     })

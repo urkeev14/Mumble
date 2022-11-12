@@ -1,6 +1,7 @@
 package com.example.mumble.ui.screens.splash
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -11,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,38 +21,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mumble.R
-import com.example.mumble.domain.model.ToolbarConfiguration
-import com.example.mumble.domain.model.UiConfiguration
 import com.example.mumble.ui.components.Logo
 import com.example.mumble.ui.navigation.Screen
 import com.example.mumble.ui.theme.MumbleTheme
 import com.example.mumble.ui.utils.navigate
 import com.example.mumble.utils.extensions.observeFlowSafely
-import com.example.mumble.utils.extensions.usingContext
 
 @Composable
 fun SplashScreen(
     viewModel: SplashViewModel = hiltViewModel(),
     navController: NavController = rememberNavController(),
 ) {
-    usingContext {
-        viewModel.updateUiConfiguration(
-            UiConfiguration(
-                ToolbarConfiguration(
-                    title = it.resources.getString(R.string.splash),
-                    isVisible = false,
-                    screen = Screen.Splash
-                )
-            )
-        )
-    }
-
-    viewModel.isUserOnboarded.observeFlowSafely { isUserOnboarded ->
-        if (isUserOnboarded) {
+    viewModel.isSplashAnimationOver.observeFlowSafely { isOver ->
+        if (isOver) {
             if (viewModel.getIsUserOnboarded()) {
-                navController.navigate(Screen.Introduction)
+                navController.navigate(Screen.Splash, Screen.Introduction)
             } else {
-                navController.navigate(Screen.Onboarding)
+                navController.navigate(Screen.Splash, Screen.Onboarding)
             }
         }
     }
@@ -59,6 +46,7 @@ fun SplashScreen(
         visible = viewModel.isLogoVisible.value,
         enter = fadeIn(animationSpec = tween(SplashViewModel.ANIMATION_TIME)),
     ) {
+        Log.d("SplashScreen", "Recomposition")
         SplashContent()
     }
 }

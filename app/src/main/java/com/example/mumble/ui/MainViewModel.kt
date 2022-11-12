@@ -2,7 +2,7 @@ package com.example.mumble.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mumble.domain.model.UiConfiguration
+import com.example.mumble.domain.model.UiState
 import com.example.mumble.domain.usecase.ReadCurrentUserUseCase
 import com.example.mumble.domain.usecase.ReadUiConfigurationUseCase
 import com.example.mumble.domain.usecase.ReadUiMessageUseCase
@@ -35,10 +35,10 @@ class MainViewModel @Inject constructor(
         started = SharingStarted.Lazily
     )
 
-    val uiConfiguration: StateFlow<UiConfiguration> = readUiConfigurationUseCase().stateIn(
+    val uiState: StateFlow<UiState> = readUiConfigurationUseCase().stateIn(
         viewModelScope,
         started = SharingStarted.Lazily,
-        initialValue = UiConfiguration()
+        initialValue = UiState()
     )
 
     fun setWifiConnectionAvailable(isAvailable: Boolean) {

@@ -17,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.mumble.data.fake.fakeConversations
-import com.example.mumble.domain.model.ToolbarConfiguration
-import com.example.mumble.domain.model.UiConfiguration
+import com.example.mumble.domain.model.ToolbarState
+import com.example.mumble.domain.model.UiState
 import com.example.mumble.ui.components.MessageInputField
 import com.example.mumble.ui.model.Conversation
 import com.example.mumble.ui.model.User
@@ -41,7 +41,7 @@ fun ChatScreen(
 
     user?.let {
         val configuration = getUiConfiguration(it)
-        usingContext { viewModel.updateUiConfiguration(configuration) }
+        usingContext { viewModel.updateUiState(configuration) }
     }
     conversation?.let {
         ChatScreenContent(
@@ -78,12 +78,12 @@ fun ChatScreenContent(
 }
 
 @Composable
-private fun getUiConfiguration(it: User): UiConfiguration {
-    return UiConfiguration(
-        ToolbarConfiguration(
+private fun getUiConfiguration(it: User): UiState {
+    return UiState(
+        ToolbarState(
             title = it.username,
             color = it.avatar.color,
-            screen = Screen.Chat(it.username)
+            screen = Screen.Chat(it.id.toString())
         )
     )
 }

@@ -8,7 +8,7 @@ import com.example.mumble.domain.usecase.ReadAllUsersOnlineUseCase
 import com.example.mumble.domain.usecase.ReadCurrentUserUseCase
 import com.example.mumble.domain.usecase.SetUiMessageUseCase
 import com.example.mumble.domain.usecase.UpdateCurrentUserUseCase
-import com.example.mumble.domain.usecase.UpdateUiConfigurationUseCase
+import com.example.mumble.domain.usecase.UpdateUiStateUseCase
 import com.example.mumble.services.manager.IUserDiscoveryManager
 import com.example.mumble.services.manager.UserAnnouncementManager
 import com.example.mumble.services.manager.UserDiscoveryManager
@@ -30,7 +30,7 @@ class AppModule {
     @Singleton
     @Provides
     fun provideUiManager(
-        updateUiConfigurationUseCase: UpdateUiConfigurationUseCase,
+        updateUiConfigurationUseCase: UpdateUiStateUseCase,
         setUiMessageUseCase: SetUiMessageUseCase
     ): IUiManager {
         return UiManager(updateUiConfigurationUseCase, setUiMessageUseCase)

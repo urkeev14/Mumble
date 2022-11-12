@@ -14,7 +14,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,8 +22,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mumble.R
 import com.example.mumble.data.fake.fakeConversations
-import com.example.mumble.domain.model.ToolbarConfiguration
-import com.example.mumble.domain.model.UiConfiguration
+import com.example.mumble.domain.model.ToolbarState
+import com.example.mumble.domain.model.UiState
 import com.example.mumble.ui.components.Search
 import com.example.mumble.ui.model.Conversation
 import com.example.mumble.ui.navigation.Screen
@@ -32,8 +31,11 @@ import com.example.mumble.ui.screens.info.InfoScreen
 import com.example.mumble.ui.screens.info.InfoScreenVariants
 import com.example.mumble.ui.tags.ChatsScreenTags
 import com.example.mumble.ui.theme.MumbleTheme
+import com.example.mumble.ui.theme.spaceM
 import com.example.mumble.ui.theme.spaceS
 import com.example.mumble.ui.utils.navigate
+import com.example.mumble.utils.extensions.localContext
+import com.example.mumble.utils.extensions.usingContext
 import java.util.UUID
 
 @Composable
@@ -42,16 +44,20 @@ fun ConversationsScreen(
     viewModel: ConversationsViewModel = hiltViewModel(),
     navController: NavController = rememberNavController(),
 ) {
-    viewModel.updateUiConfiguration(
-        UiConfiguration(
-            ToolbarConfiguration(
-                LocalContext.current.resources.getString(
-                    R.string.lets_chat
-                ),
-                screen = Screen.Chats.Conversations
+    val context = localContext()
+    usingContext {
+        viewModel.updateUiState(
+            UiState(
+                ToolbarState(
+                    context.resources.getString(
+                        R.string.lets_chat
+                    ),
+                    screen = Screen.Chats.Conversations
+                )
             )
         )
-    )
+    }
+
     val conversations by viewModel.conversations.collectAsState()
     val search by viewModel.search.collectAsState()
 
@@ -61,7 +67,7 @@ fun ConversationsScreen(
         onSearchChange = viewModel::setSearch,
         conversations = conversations,
         onConversationClick = {
-            navController.navigate(Screen.Chat(it.toString()))
+            navController.navigate(Screen.Chats.Conversations, Screen.Chat(it.toString()))
         }
     )
 }
@@ -80,17 +86,18 @@ private fun ConversationsContent(
         Column(
             modifier = modifier
                 .testTag(ChatsScreenTags.ChatUsersWithSearch.toString())
-                .fillMaxSize(),
+                .fillMaxSize()
+                .padding(top = spaceS, bottom = spaceM, start = spaceM, end = spaceM),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Search(
                 value = search,
-                modifier = Modifier
-                    .testTag(ChatsScreenTags.Search.toString()),
+                modifier = Modifier.testTag(ChatsScreenTags.Search.toString()),
                 onValueChange = onSearchChange
             )
-            ConversationList(conversations = fakeConversations, onConversationClick = {
+            Spacer(modifier = Modifier.size(spaceS))
+            ConversationList(conversations = conversations, onConversationClick = {
                 val id = it.messages.first { message ->
                     message.creator.isCurrentUser.not()
                 }.creator.id

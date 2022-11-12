@@ -1,8 +1,8 @@
 package com.example.mumble.ui
 
-import com.example.mumble.domain.model.UiConfiguration
+import com.example.mumble.domain.model.UiState
 import com.example.mumble.domain.usecase.SetUiMessageUseCase
-import com.example.mumble.domain.usecase.UpdateUiConfigurationUseCase
+import com.example.mumble.domain.usecase.UpdateUiStateUseCase
 import com.example.mumble.utils.UiMessage
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -13,7 +13,7 @@ import org.junit.Test
 
 internal class UiManagerTest {
 
-    private lateinit var updateUiConfiguration: UpdateUiConfigurationUseCase
+    private lateinit var updateUiConfiguration: UpdateUiStateUseCase
     private lateinit var setUiMessageUseCase: SetUiMessageUseCase
     private lateinit var sut: IUiManager
 
@@ -26,12 +26,12 @@ internal class UiManagerTest {
 
     @Test
     fun `updateUiConfiguration calls appropriate use case`() = runBlocking {
-        val uiConfiguration = UiConfiguration()
+        val uiState = UiState()
         coEvery { updateUiConfiguration(any()) } returns Unit
 
-        sut.updateUiConfiguration(uiConfiguration)
+        sut.updateUiState(uiState)
 
-        coVerify(exactly = 1) { updateUiConfiguration(uiConfiguration) }
+        coVerify(exactly = 1) { updateUiConfiguration(uiState) }
     }
 
     @Test

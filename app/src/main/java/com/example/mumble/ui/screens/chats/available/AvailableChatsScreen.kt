@@ -11,16 +11,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.mumble.R
 import com.example.mumble.data.fake.fakeUsers
-import com.example.mumble.domain.model.ToolbarConfiguration
-import com.example.mumble.domain.model.UiConfiguration
 import com.example.mumble.ui.components.Search
 import com.example.mumble.ui.model.User
 import com.example.mumble.ui.navigation.Screen
@@ -37,23 +33,23 @@ fun AvailableChatsScreen(
     navController: NavController = rememberNavController(),
 ) {
     // TODO: Implement sending a flag to repository flowable that triggers START action of ChatAnnouncementService
-    viewModel.updateUiConfiguration(
-        UiConfiguration(
-            ToolbarConfiguration(
-                LocalContext.current.resources.getString(
-                    R.string.lets_chat
-                ),
-                screen = Screen.Chats.AvailableUsers
-            )
-        )
-    )
+//    viewModel.updateUiConfiguration(
+//        UiConfiguration(
+//            ToolbarConfiguration(
+//                LocalContext.current.resources.getString(
+//                    R.string.lets_chat
+//                ),
+//                screen = Screen.Chats.AvailableUsers
+//            )
+//        )
+//    )
     val users by viewModel.usersOnline.collectAsState()
     val search by viewModel.search.collectAsState()
 
     AvailableChatsScreenContent(
         users = users, search = search, viewModel::setSearch
     ) {
-        navController.navigate(Screen.Chat(it.id.toString()))
+        navController.navigate(Screen.Chats.AvailableUsers, Screen.Chat(it.id.toString()))
     }
 }
 

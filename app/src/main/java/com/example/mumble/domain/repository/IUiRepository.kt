@@ -1,6 +1,6 @@
 package com.example.mumble.domain.repository
 
-import com.example.mumble.domain.model.UiConfiguration
+import com.example.mumble.domain.model.UiState
 import com.example.mumble.utils.UiMessage
 import kotlinx.coroutines.flow.Flow
 
@@ -10,12 +10,12 @@ interface IUiRepository {
      *
      * @param value value of a new configuration
      */
-    fun updateUiConfiguration(value: UiConfiguration)
+    fun updateUiConfiguration(value: UiState)
 
     /**
      * Returns UI configuration
      */
-    fun getUiConfig(): Flow<UiConfiguration>
+    fun getUiConfig(): Flow<UiState>
 
     /**
      * Sets one-time message used to be shown to user through dialog, snackbar etc.

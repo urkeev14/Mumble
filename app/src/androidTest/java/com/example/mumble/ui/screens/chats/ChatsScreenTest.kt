@@ -56,7 +56,7 @@ internal class ChatsScreenTest {
     @Test
     fun givenNoUsersOnline_whenLoadingScreen_thenNobodyOnlineScreenWillBeShown(): Unit =
         with(composeTestRule) {
-            coEvery { viewModel.updateUiConfiguration(any()) } just Runs
+            coEvery { viewModel.updateUiState(any()) } just Runs
             every { viewModel.search } returns MutableStateFlow("")
             every { viewModel.usersOnline } returns MutableStateFlow(emptyList())
 
@@ -68,7 +68,7 @@ internal class ChatsScreenTest {
     @Test
     fun givenFakeUsersOnline_whenLoadingScreen_thenNobodyOnlineScreenWillNotBeShown(): Unit =
         with(composeTestRule) {
-            coEvery { viewModel.updateUiConfiguration(any()) } just Runs
+            coEvery { viewModel.updateUiState(any()) } just Runs
             every { viewModel.search } returns MutableStateFlow("")
             every { viewModel.usersOnline } returns MutableStateFlow(fakeUsers)
 
@@ -80,7 +80,7 @@ internal class ChatsScreenTest {
     @Test
     fun givenFakeUsersOnline_whenUserPerformsSearch_thenUserListIsFiltered(): Unit =
         with(composeTestRule) {
-            coEvery { viewModel.updateUiConfiguration(any()) } just Runs
+            coEvery { viewModel.updateUiState(any()) } just Runs
             every { viewModel.search } returns MutableStateFlow(fakeUsers.first().username)
             every { viewModel.usersOnline } returns MutableStateFlow(fakeUsers)
 
@@ -92,7 +92,7 @@ internal class ChatsScreenTest {
     @Test
     fun givenFakeUsersOnline_WhenUserClicksOnSomeUser_thenOnStartChatIsTriggered(): Unit =
         with(composeTestRule) {
-            coEvery { viewModel.updateUiConfiguration(any()) } just Runs
+            coEvery { viewModel.updateUiState(any()) } just Runs
             every { viewModel.search } returns MutableStateFlow("ur")
             every { viewModel.usersOnline } returns MutableStateFlow(fakeUsers)
 
